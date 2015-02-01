@@ -48,10 +48,26 @@
       ((eq? a (car lat)) (multirember a (cdr lat)))
       (else (cons (car lat) (multirember a (cdr lat)))) )))
 
+; Remove some code duplicaton here and use if because choices are binary
+; Generally more functional approach from here on but not worrying
+; about tail position
 (define multiinsertR
   (lambda (new old lat)
-    (cond
-      ((null? lat) '())
-      (else (cons (car lat) (cond
-                        ((eq? old (car lat)) (cons new (multiinsertR new old (cdr lat))))
-                        (else (multiinsertR new old (cdr lat))) ))))))
+    (if (null? lat) '()
+      (let ((a (car lat))
+            (rest (multiinsertR new old (cdr lat))) )
+        (cons a (if (eq? old a) (cons new rest) rest)) ))))
+
+; Replacing cond with if because choices are binary
+(define multiinsertL
+  (lambda (new old lat)
+    (if (null? lat) '()
+      (let ((a (car lat))
+            (rest (cons a (multiinsertL new old (cdr lat)))) )
+        (if (eq? old a) (cons new rest) rest) ))))
+
+(define multisubst
+  (lambda (new old lat)
+    (if (null? lat) '()
+      (let ((a (car lat)))
+        (cons (if (eq? old a) new a) (multisubst new old (cdr lat))) ))))
