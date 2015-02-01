@@ -1,3 +1,5 @@
+; Revisiting Little Schemer with benefit of FP experience
+;
 (define rember
   (lambda (a lat)
     (cond
