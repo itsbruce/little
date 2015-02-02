@@ -35,11 +35,6 @@
   (lambda (i n)
     (if (zero? n) 0 (o+ i (x i (sub1 n)))) ))
 
-; My first interpretation of this sensibly ignored the "la la la, I'm not
-; not listening if one list is longer than the other" approach of the
-; book.  Sorry, I have some pride.  I also think the book's attitude is a
-; bit non-Scheme, frankly.  Why implement a partial function when you
-; don't have to?  Going to do that again, even if I don't do tailrec
 (define tup+
   (lambda (t1 t2)
     (cond
