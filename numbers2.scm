@@ -41,3 +41,28 @@
       ((null? t1) t2)
       ((null? t2) t1)
       (else (cons (o+ (car t1) (car t2)) (tup+ (cdr t1) (cdr t2)))) )))
+
+; OK, here I accept the "no input is negative" schtick.  At least it's
+; tailrec
+(define o>
+  (lambda (n m)
+    (cond
+      ((zero? n) #f)
+      ((zero? m) #t)
+      (else (o> (sub1 n) (sub1 m))) )))
+
+; tailrec plus schtick
+(define o<
+  (lambda (n m)
+    (cond
+      ((zero? m) #f)
+      ((zero? n) #t)
+      (else (o< (sub1 n) (sub1 m))) )))
+
+; tailrec plus schtick
+(define o=
+  (lambda (n m)
+    (cond
+      ((and (zero? n) (zero? m)) #t)
+      ((or (zero? n) (zero? m)) #f)
+      (else (o= (sub1 n) (sub1 m))) )))
