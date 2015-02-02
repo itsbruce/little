@@ -66,3 +66,32 @@
       ((and (zero? n) (zero? m)) #t)
       ((or (zero? n) (zero? m)) #f)
       (else (o= (sub1 n) (sub1 m))) )))
+
+(define ^
+  (lambda (n m)
+    (cond
+      ((zero? n) 0)
+      ((zero? m) 1)
+      (else (x n (^ n (sub1 m)))) )))
+
+(define len
+  (lambda (l)
+    (if (null? l) 0 (o+ 1 (len (cdr l)))) ))
+
+; Why not be zero based, ffs?  Meh.  tailrec at least. No cond.
+; I realise this was a teaching aid but this could have been done 
+; zero based etc with no confusion
+(define pick
+  (lambda (n l)
+    (if (eq? n 1) (car l) (pick (sub1 n) (cdr l))) ))
+
+; Not even tailrec.
+(define rempick
+  (lambda (n l)
+    (if (eq? n 1) (cdr l) (cons (car l) (rempick (sub1 n) (cdr l)))) ))
+
+(define no-nums
+  (lambda (l)
+    (if (null? l) '()
+      (let ((a (car l)) (rest (no-nums (cdr l))))
+        (if (number? a) rest (cons a rest)) ))))
