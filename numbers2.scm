@@ -95,3 +95,22 @@
     (if (null? l) '()
       (let ((a (car l)) (rest (no-nums (cdr l))))
         (if (number? a) rest (cons a rest)) ))))
+
+(define all-nums
+  (lambda (l)
+    (if (null? l) '()
+      (let ((a (car l)) (rest (all-nums (cdr l))))
+        (if (number? a) (cons a rest) rest) ))))
+
+(define eqan?
+  (lambda (a1 a2)
+    (cond
+      ((number? a1) (and (number? a2) (o= a1 a2)))
+      ((number? a2) #f)
+      (else (eq? a1 a2)) )))
+
+(define occur
+  (lambda (a lat)
+    (if (null? lat) 0
+      (let ((rest (occur a (cdr lat))))
+        (if (eq? a (car lat)) (add1 rest) rest) ))))
